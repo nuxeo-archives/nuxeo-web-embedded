@@ -1,0 +1,156 @@
+<project name="nuxeo-shell-assembly"
+         default="build"
+         xmlns:nx="urn:nuxeo-build"
+         xmlns:artifact="urn:nuxeo-artifact">
+  <taskdef resource="org/nuxeo/build/antlib.xml" uri="urn:nuxeo-build" />
+  <taskdef resource="org/nuxeo/build/artifact/antlib.xml"
+           uri="urn:nuxeo-artifact" />
+
+
+  <target name="init" unless="init.done">
+    <property name="outdir" value="${maven.project.build.directory}" />
+    <property name="stagedir" value="${outdir}/stage" />
+    <property name="shelldir"
+              value="${stagedir}/nuxeo-shell-rmi-${maven.project.version}" />
+
+    <antcall target="expand" />
+    <property name="init.done" value="true" />
+  </target>
+
+  <target name="expand" unless="no.build">
+    <artifact:nuxeo-expand />
+    <!--artifact:print output="dependency-tree.log" /--> 
+  </target>
+
+  <target name="build" depends="init,clean" unless="no.build">
+    <echo>Building Nuxeo Shell</echo>
+    <mkdir dir="${shelldir}" />
+
+    <copy todir="${shelldir}" overwrite="true">
+      <fileset dir="src/main/resources" />
+      <artifact:file artifactId="nuxeo-runtime-launcher" />
+    </copy>
+
+    <copy todir="${shelldir}/" overwrite="true">
+      <artifact:file artifactId="nuxeo-runtime-launcher" />
+    </copy>
+
+    <copy todir="${shelldir}/bundles" overwrite="true">
+      <artifact:set>
+        <includes>
+          <artifact groupId="org.nuxeo*" />
+        </includes>
+        <excludes>
+          <artifact artifactId="nuxeo-apt-extensions" />
+          <artifact artifactId="nuxeo-runtime-test" />
+          <artifact artifactId="nuxeo-runtime-launcher" />
+        </excludes>
+      </artifact:set>
+    </copy>
+
+    <antcall target="third-party-libraries" />
+
+    <zip destfile="${outdir}/${maven.project.artifactId}-${maven.project.version}.zip"
+         basedir="${stagedir}" />
+    <artifact:attach file="${outdir}/${maven.project.artifactId}-${maven.project.version}.zip"
+                     target="${maven.project.groupId}:${maven.project.artifactId}"
+                     type="zip" />
+  </target>
+
+  <target name="third-party-libraries">
+    <copy todir="${shelldir}/lib" overwrite="true">
+      <artifact:set>
+	<excludes>
+            <artifact groupId="org.nuxeo*" />
+	    <artifact artifactId="jboss-class*" />
+	    <artifact artifactId="jbosscache*" />
+	    <artifact artifactId="jboss-as-*" />
+	    <artifact artifactId="jboss-bootstrap" />
+	    <artifact artifactId="jboss-container" />
+	    <artifact artifactId="jboss-current*" />
+	    <artifact artifactId="jboss-dependency" />
+	    <artifact artifactId="jboss-deployers-impl" />
+	    <artifact artifactId="jboss-deployers-spi" />
+	    <artifact artifactId="jboss-deployers-structure-spi" />
+	    <artifact artifactId="jboss-jacc*" />
+	    <artifact artifactId="jboss-jad*" />
+	    <artifact artifactId="jboss-jaspi*" />
+	    <artifact artifactId="jboss-jaxrcp*" />
+	    <artifact artifactId="jboss-jca*" />
+	    <artifact artifactId="jboss-jms*" />
+	    <artifact artifactId="jboss-jpa*" />
+	    <artifact artifactId="jboss-kernel" />
+	    <artifact artifactId="jboss-managed" />
+	    <artifact artifactId="jboss-metatype" />
+	    <artifact artifactId="jboss-persistence*" />
+	    <artifact artifactId="jboss-reflect" />
+	    <artifact artifactId="jboss-server-manager" />
+	    <artifact artifactId="jboss-servlet*" />
+	    <artifact artifactId="jbosssx" />
+	    <artifact artifactId="jboss-test" />
+	    <artifact artifactId="jbossws*" />
+	    <artifact artifactId="jbossxacml" />
+	    <artifact artifactId="jbossxb" />
+	    <artifact artifactId="jnpserver" />
+	    <artifact artifactId="jsr173*" />
+	    <artifact artifactId="jsr181*" />
+	    <artifact artifactId="jta" />
+	    <artifact artifactId="junit" />
+	    <artifact artifactId="pluggable-instrumentor" />
+	    <artifact artifactId="qdox" />
+	    <artifact artifactId="quartz" />
+	    <artifact artifactId="servlet-api" />
+	    <artifact artifactId="webdav" />
+	</excludes>
+<!--
+        <includes>
+            <artifact artifactId="asm"/>
+            <artifact artifactId="cglib"/>
+	    <artifact artifactId="jacorb"/>
+	    <artifact artifactId="javassist"/>
+	    <artifact artifactId="jaxb*"/>
+	    <artifact artifactId="jaxws*"/>
+            <artifact artifactId="commons-logging"/>
+            <artifact artifactId="concurrent"/>
+            <artifact artifactId="ejb3-persistence"/>
+            <artifact artifactId="hibernate-annotations"/>
+	    <artifact artifactId="jboss-*client"/>
+            <artifact artifactId="jboss-annotations-ejb3"/>
+            <artifact artifactId="jboss-auth"/>
+            <artifact artifactId="jboss-appclient"/>
+            <artifact artifactId="jboss-common*"/>
+            <artifact artifactId="jboss-ejb3-ext-api"/>
+            <artifact artifactId="jboss-logging*"/>
+            <artifact artifactId="slf4j-api"/>
+            <artifact artifactId="slf4j-jboss-logging"/>
+            <artifact artifactId="jboss-deployment"/>
+            <artifact artifactId="jboss-javaee"/>
+            <artifact artifactId="jboss-integration"/>
+            <artifact artifactId="jboss-j2se"/>
+            <artifact artifactId="jboss-remoting"/>
+            <artifact artifactId="jboss-security-spi"/>
+            <artifact artifactId="jboss-serialization"/>
+            <artifact artifactId="jmx-connector-client-factory"/>
+            <artifact artifactId="namespace"/>
+            <artifact artifactId="xmlsec"/>
+            <artifact artifactId="jboss-messaging"/>
+            <artifact artifactId="jboss-mdr"/>
+            <artifact artifactId="jboss-deployers-core"/>
+            <artifact artifactId="jboss-deployers-core-spi"/>
+            <artifact artifactId="jboss-deployers-client"/>
+            <artifact artifactId="jboss-deployers-client-spi"/>
+            <artifact artifactId="jbossjts"/>
+            <artifact artifactId="jbossjts-integration"/> 
+        </includes>
+ -->
+      </artifact:set>
+    </copy>
+    <!-- Remove duplicates -->
+    <nx:rmdups dir="${shelldir}/lib" />
+  </target>
+
+  <target name="clean">
+    <delete dir="${stagedir}" />
+  </target>
+
+</project>
