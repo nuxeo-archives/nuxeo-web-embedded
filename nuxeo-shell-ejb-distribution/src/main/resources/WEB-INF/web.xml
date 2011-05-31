@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE web-app PUBLIC
+   "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+   "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+	<description>Nuxeo Client demo servlet</description>
+
+	<servlet>
+		<servlet-name>demo</servlet-name>
+		<servlet-class>org.nuxeo.ecm.servlet.NuxeoServlet</servlet-class>
+		<init-param>
+			<param-name>nuxeo-client</param-name>
+			<param-value></param-value>
+			<description>The nuxeo client base directory</description>
+		</init-param>
+		<init-param>
+			<param-name>handler</param-name>
+			<param-value>org.nuxeo.ecm.servlet.DemoServletHandler</param-value>
+			<description>The servlet handler</description>
+		</init-param>
+		<init-param>
+			<param-name>host</param-name>
+			<param-value>localhost</param-value>
+			<description>Nuxeo server host</description>
+		</init-param>
+		<init-param>
+			<param-name>port</param-name>
+			<param-value>62474</param-value>
+			<description>Nuxeo server port</description>
+		</init-param>
+
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>demo</servlet-name>
+		<url-pattern>/demo</url-pattern>
+	</servlet-mapping>
+
+</web-app>

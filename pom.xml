@@ -14,6 +14,7 @@
   <packaging>pom</packaging>
   <modules>
     <module>nuxeo-shell-ejb-core</module>
+    <module>nuxeo-shell-ejb-servlet</module>
     <module>nuxeo-shell-ejb-distribution</module>
   </modules>
   <dependencyManagement>
@@ -21,6 +22,11 @@
       <dependency>
         <groupId>org.nuxeo.shell</groupId>
         <artifactId>nuxeo-shell-ejb-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.shell</groupId>
+        <artifactId>nuxeo-shell-ejb-servlet</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

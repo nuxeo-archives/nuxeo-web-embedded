@@ -1,0 +1,89 @@
+<assembly>
+
+  <fileSet id="template">
+    <directory>src/main/resources</directory>
+  </fileSet>
+
+  <fileSet id="war-handlers">
+    <directory>target/classes</directory>
+    <includes>
+      <include>**/org</include>
+      <include>**/org/nuxeo</include>
+      <include>**/org/nuxeo/ecm</include>
+      <include>**/org/nuxeo/ecm/servlet</include>
+      <include>**/DemoServletHandler.class</include>
+    </includes>
+  </fileSet>
+
+  <fileSet id="war-classes">
+    <directory>target/classes</directory>
+    <includes>>
+      <include>**/org/nuxeo/ecm/servlet/**</include>
+    </includes>
+  </fileSet>
+
+
+  <artifactSet id="war-lib">
+    <import>*</import>
+    <includes>
+      <artifact name="nuxeo-runtime-osgi" />
+      <artifact name="nuxeo-runtime-launcher"/>
+      <artifact name="nuxeo-common" />
+      <artifact artifactId="org.osgi" />
+    </includes>
+  </artifactSet>
+
+  <artifactSet id="bundles">
+    <import>*</import>
+    <includes>
+      <artifact name="nuxeo-runtime" />
+      <artifact name="nuxeo-runtime-scripting" />
+      <artifact name="nuxeo-core-api" />
+      <artifact name="nuxeo-core-schema" />
+      <artifact name="nuxeo-core-client" />
+    </includes>
+  </artifactSet>
+
+
+  <artifactSet id="jboss-client-libs">
+    <import>*</import>
+    <includes>
+      <artifact group="jboss" />
+      <artifact group="concurrent" />
+      <artifact group="dom4j" />
+    </includes>
+  </artifactSet>
+
+
+  <assemble>
+    <set>template</set>
+    <outputFile>/</outputFile>
+  </assemble>
+
+  <assemble>
+    <set>war-handlers</set>
+    <outputFile>WEB-INF/handlers</outputFile>
+  </assemble>
+
+  <assemble>
+    <set>war-classes</set>
+    <outputFile>WEB-INF/classes</outputFile>
+  </assemble>
+
+  <assemble>
+    <set>war-lib</set>
+    <outputFile>WEB-INF/lib</outputFile>
+  </assemble>
+
+  <assemble>
+    <set>jboss-client-libs</set>
+    <outputFile>app/lib</outputFile>
+  </assemble>
+
+  <assemble>
+    <set>bundles</set>
+    <outputFile>app/bundles</outputFile>
+  </assemble>
+
+</assembly>
+
