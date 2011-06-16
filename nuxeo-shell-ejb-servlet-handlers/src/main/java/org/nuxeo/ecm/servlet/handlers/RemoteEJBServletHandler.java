@@ -17,7 +17,7 @@
  * $Id$
  */
 
-package org.nuxeo.ecm.servlet;
+package org.nuxeo.ecm.servlet.handlers;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -33,13 +33,15 @@ import org.nuxeo.ecm.core.api.repository.RepositoryManager;
 import org.nuxeo.ecm.core.client.DefaultLoginHandler;
 import org.nuxeo.ecm.core.client.LoginHandler;
 import org.nuxeo.ecm.core.client.NuxeoClient;
+import org.nuxeo.ecm.servlet.NuxeoServlet;
+import org.nuxeo.ecm.servlet.ServletHandler;
 import org.nuxeo.runtime.api.Framework;
 
 /**
  * @author <a href="mailto:bs@nuxeo.com">Bogdan Stefanescu</a>
  *
  */
-public class DemoServletHandler extends ServletHandler {
+public class RemoteEJBServletHandler extends ServletHandler {
 
     String host;
     int port;

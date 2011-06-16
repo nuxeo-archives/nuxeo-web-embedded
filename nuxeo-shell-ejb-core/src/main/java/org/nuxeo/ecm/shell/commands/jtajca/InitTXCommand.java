@@ -38,8 +38,7 @@ public class InitTXCommand extends AbstractCommand {
     @Override
     public void run(CommandLine cmdLine) throws NamingException {
         try {
-            NamingContextFactory.setAsInitial();
-            NuxeoContainer.initTransactionManagement();
+            NuxeoContainer.install();
         } catch (NamingException e) {
             throw e;
         }

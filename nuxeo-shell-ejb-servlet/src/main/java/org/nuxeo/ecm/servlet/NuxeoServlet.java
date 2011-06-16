@@ -21,7 +21,8 @@ package org.nuxeo.ecm.servlet;
 
 import java.io.File;
 import java.io.IOException;
-import java.security.Principal;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -64,8 +65,9 @@ public class NuxeoServlet extends HttpServlet {
         }
 
         try {
-            handler = (ServletHandler) fb.getClassLoader().loadClass(
+            final Object newInstance = fb.getClassLoader().loadClass(
                     handlerClass).newInstance();
+            handler = (ServletHandler) newInstance;
             initHandler();
         } catch (Exception e) {
             throw new ServletException("Failed to instantiate handler", e);
@@ -164,7 +166,7 @@ public class NuxeoServlet extends HttpServlet {
     protected static FrameworkBootstrap loadRuntime(ServletConfig config)
             throws Exception {
         String warFile = config.getServletContext().getRealPath("");
-        String root = config.getInitParameter("nuxeo-client");
+        String root = config.getInitParameter("nxhome");
         if (root == null) {
             root = "";
         }

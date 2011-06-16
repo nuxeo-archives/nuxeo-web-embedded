@@ -10,6 +10,7 @@
   </parent>
 
   <artifactId>nuxeo-shell-ejb-core</artifactId>
+  <name>Nuxeo Shell EJB Core</name>
 
   <dependencies>
     <dependency>

@@ -10,11 +10,12 @@
 
   <groupId>org.nuxeo.shell</groupId>
   <artifactId>nuxeo-shell-ejb-parent</artifactId>
-  <name>Nuxeo EJB Shell</name>
+  <name>Nuxeo Shell EJB</name>
   <packaging>pom</packaging>
   <modules>
     <module>nuxeo-shell-ejb-core</module>
     <module>nuxeo-shell-ejb-servlet</module>
+    <module>nuxeo-shell-ejb-servlet-handlers</module>
     <module>nuxeo-shell-ejb-distribution</module>
   </modules>
   <dependencyManagement>
@@ -27,6 +28,11 @@
       <dependency>
         <groupId>org.nuxeo.shell</groupId>
         <artifactId>nuxeo-shell-ejb-servlet</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.shell</groupId>
+        <artifactId>nuxeo-shell-ejb-servlet-handlers</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

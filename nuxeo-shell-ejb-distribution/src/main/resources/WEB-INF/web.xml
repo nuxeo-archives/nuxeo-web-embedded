@@ -15,8 +15,8 @@
 		</init-param>
 		<init-param>
 			<param-name>handler</param-name>
-			<param-value>org.nuxeo.ecm.servlet.DemoServletHandler</param-value>
-			<description>The servlet handler</description>
+			<param-value>org.nuxeo.ecm.servlet.handlers.EmbeddedServletHandler</param-value>
+			<description>The emdedded servlet handler</description>
 		</init-param>
 		<init-param>
 			<param-name>host</param-name>

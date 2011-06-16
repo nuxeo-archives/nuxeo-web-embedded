@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>nuxeo-shell-ejb-servlet</artifactId>
-  <name>Nuxeo EJB Client Servlet</name>
+  <name>Nuxeo Shell EJB Servlet</name>
 
   <dependencies>
 
