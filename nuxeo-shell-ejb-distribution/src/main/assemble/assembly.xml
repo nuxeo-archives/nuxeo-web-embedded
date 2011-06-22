@@ -21,7 +21,7 @@
 
   <target name="expand" unless="no.build">
     <artifact:nuxeo-expand />
-    <!-- <artifact:print output="dependency-tree.log" /> -->
+    <artifact:print output="dependency-tree.log" />
   </target>
 
   <target name="build"
@@ -36,11 +36,11 @@
       <fileset dir="src/main/resources">
         <exclude name="WEB-INF/**" />
       </fileset>
-      <artifact:file artifactId="nuxeo-runtime-launcher" />
+      <artifact:file artifactId="nuxeo-runtime-launcher" /> 
     </copy>
 
     <copy todir="${shelldir}/" overwrite="true">
-      <artifact:file artifactId="nuxeo-runtime-launcher" />
+      <artifact:file artifactId="nuxeo-runtime-launcher" /> 
     </copy>
 
     <copy todir="${shelldir}/bundles" overwrite="true">
@@ -49,8 +49,7 @@
           <artifact groupId="org.nuxeo*" />
         </includes>
         <excludes>
-          <artifact artifactId="nuxeo-apt-extensions" />
-          <artifact artifactId="nuxeo-runtime-test" />
+	  <artifact artifactId="nuxeo-shell-ejb-distribution" />
           <artifact artifactId="nuxeo-runtime-launcher" />
         </excludes>
       </artifact:set>
@@ -64,55 +63,24 @@
 
     <artifact:attach file="${outdir}/${maven.project.artifactId}-${maven.project.version}.zip"
                      target="${maven.project.groupId}:${maven.project.artifactId}"
-                     type="zip"
-                     classifier="runtime" />
+                     type="zip" 
+		     classifier="runtime"/>
+
   </target>
 
   <target name="lib-shell">
     <copy todir="${shelldir}/lib" overwrite="true">
       <artifact:set>
-        <excludes>
-          <artifact groupId="org.nuxeo*" />
-          <artifact artifactId="jboss-class*" />
-          <artifact artifactId="jbosscache*" />
-          <artifact artifactId="jboss-as-*" />
-          <artifact artifactId="jboss-bootstrap" />
-          <artifact artifactId="jboss-container" />
-          <artifact artifactId="jboss-current*" />
-          <artifact artifactId="jboss-dependency" />
-          <artifact artifactId="jboss-deployers-impl" />
-          <artifact artifactId="jboss-deployers-spi" />
-          <artifact artifactId="jboss-deployers-structure-spi" />
-          <artifact artifactId="jboss-jacc*" />
-          <artifact artifactId="jboss-jad*" />
-          <artifact artifactId="jboss-jaspi*" />
-          <artifact artifactId="jboss-jaxrcp*" />
-          <artifact artifactId="jboss-jca*" />
-          <artifact artifactId="jboss-jms*" />
-          <artifact artifactId="jboss-jpa*" />
-          <artifact artifactId="jboss-kernel" />
-          <artifact artifactId="jboss-managed" />
-          <artifact artifactId="jboss-metatype" />
-          <artifact artifactId="jboss-persistence*" />
-          <artifact artifactId="jboss-reflect" />
-          <artifact artifactId="jboss-server-manager" />
-          <artifact artifactId="jboss-servlet*" />
-          <artifact artifactId="jbosssx" />
-          <artifact artifactId="jboss-test" />
-          <artifact artifactId="jbossws*" />
-          <artifact artifactId="jbossxacml" />
-          <artifact artifactId="jbossxb" />
-          <artifact artifactId="jnpserver" />
-          <artifact artifactId="jsr173*" />
-          <artifact artifactId="jsr181*" />
-          <artifact artifactId="jta" />
-          <artifact artifactId="junit" />
-          <artifact artifactId="pluggable-instrumentor" />
-          <artifact artifactId="qdox" />
-          <artifact artifactId="quartz" />
-          <artifact artifactId="servlet-api" />
-          <artifact artifactId="webdav" />
-        </excludes>
+	<excludes>
+            <artifact groupId="org.nuxeo*" />
+	    <artifact artifactId="jsr173*" />
+	    <artifact artifactId="jsr181*" />
+	    <artifact artifactId="jta" />
+	    <artifact artifactId="qdox" />
+	    <artifact artifactId="quartz" />
+	    <artifact artifactId="servlet-api" />
+	    <artifact artifactId="webdav" />
+	</excludes>
       </artifact:set>
     </copy>
     <!-- Remove duplicates -->
@@ -143,8 +111,8 @@
           <artifact groupId="org.nuxeo*" />
         </includes>
         <excludes>
-          <artifact artifactId="nuxeo-apt-extensions" />
-          <artifact artifactId="nuxeo-runtime-test" />
+	  <artifact artifactId="nuxeo-shell-ejb-servlet" />
+	  <artifact artifactId="nuxeo-shell-ejb-distribution" />
           <artifact artifactId="nuxeo-runtime-launcher" />
         </excludes>
       </artifact:set>
@@ -166,40 +134,9 @@
       <artifact:set>
         <excludes>
           <artifact groupId="org.nuxeo*" />
-          <artifact artifactId="jboss-class*" />
-          <artifact artifactId="jbosscache*" />
-          <artifact artifactId="jboss-as-*" />
-          <artifact artifactId="jboss-bootstrap" />
-          <artifact artifactId="jboss-container" />
-          <artifact artifactId="jboss-current*" />
-          <artifact artifactId="jboss-dependency" />
-          <artifact artifactId="jboss-deployers-impl" />
-          <artifact artifactId="jboss-deployers-spi" />
-          <artifact artifactId="jboss-deployers-structure-spi" />
-          <artifact artifactId="jboss-jacc*" />
-          <artifact artifactId="jboss-jad*" />
-          <artifact artifactId="jboss-jaspi*" />
-          <artifact artifactId="jboss-jaxrcp*" />
-          <artifact artifactId="jboss-jca*" />
-          <artifact artifactId="jboss-jms*" />
-          <artifact artifactId="jboss-jpa*" />
-          <artifact artifactId="jboss-kernel" />
-          <artifact artifactId="jboss-managed" />
-          <artifact artifactId="jboss-metatype" />
-          <artifact artifactId="jboss-persistence*" />
-          <artifact artifactId="jboss-reflect" />
-          <artifact artifactId="jboss-server-manager" />
-          <artifact artifactId="jboss-servlet*" />
-          <artifact artifactId="jbosssx" />
-          <artifact artifactId="jboss-test" />
-          <artifact artifactId="jbossws*" />
-          <artifact artifactId="jbossxacml" />
-          <artifact artifactId="jbossxb" />
-          <artifact artifactId="jnpserver" />
           <artifact artifactId="jsr173*" />
           <artifact artifactId="jsr181*" />
           <artifact artifactId="jta" />
-          <artifact artifactId="junit" />
           <artifact artifactId="pluggable-instrumentor" />
           <artifact artifactId="qdox" />
           <artifact artifactId="quartz" />
