@@ -25,51 +25,6 @@
       </dependencies>
     </profile>
 
-    <profile>
-      <id>jboss</id>
-      <dependencies>
-        <dependency>
-          <groupId>org.nuxeo.runtime</groupId>
-          <artifactId>nuxeo-runtime-osgi</artifactId>
-          <exclusions>
-            <exclusion>
-              <groupId>org.jboss.jbossas</groupId>
-              <artifactId>jboss-as-system</artifactId>
-            </exclusion>
-            <exclusion>
-              <groupId>org.jboss.jbossas</groupId>
-              <artifactId>jboss-as-system-jmx</artifactId>
-            </exclusion>
-            <exclusion>
-              <groupId>org.jboss</groupId>
-              <artifactId>jboss-common-core</artifactId>
-            </exclusion>
-          </exclusions>
-        </dependency>
-
-        <dependency>
-          <groupId>org.nuxeo.runtime</groupId>
-          <artifactId>nuxeo-runtime-remoting</artifactId>
-          <exclusions>
-            <exclusion>
-              <groupId>org.jboss.jbossas</groupId>
-              <artifactId>jboss-as-jbossas-remoting</artifactId>
-            </exclusion>
-          </exclusions>
-        </dependency>
-
-        <dependency>
-          <groupId>org.nuxeo.runtime</groupId>
-          <artifactId>nuxeo-runtime-scripting</artifactId>
-          <exclusions>
-            <exclusion>
-              <groupId>org.jboss.remoting</groupId>
-              <artifactId>jboss-remoting</artifactId>
-            </exclusion>
-          </exclusions>
-        </dependency>
-      </dependencies>
-    </profile>
   </profiles>
 
   <dependencies>
@@ -88,6 +43,7 @@
     <dependency>
       <groupId>org.nuxeo.runtime</groupId>
       <artifactId>nuxeo-runtime-launcher</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.nuxeo.ecm.core</groupId>
@@ -176,7 +132,7 @@
       <plugin>
         <groupId>org.nuxeo.build</groupId>
         <artifactId>nuxeo-distribution-tools</artifactId>
-        <version>1.10.1-SNAPSHOT</version>
+        <version>1.10</version>
         <configuration>
           <buildFiles>
             <buildFile>${basedir}/src/main/assemble/assembly.xml</buildFile>
