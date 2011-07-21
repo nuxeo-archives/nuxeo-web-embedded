@@ -19,14 +19,8 @@
 
 package org.nuxeo.ecm.shell.commands.repository;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.nuxeo.ecm.core.search.api.client.IndexingException;
-import org.nuxeo.ecm.core.search.api.client.SearchService;
-import org.nuxeo.ecm.core.search.api.client.common.SearchServiceDelegate;
 import org.nuxeo.ecm.shell.CommandLine;
 
 /**
@@ -37,8 +31,6 @@ public class IndexCommand extends AbstractCommand {
     private static final Log log = LogFactory.getLog(IndexCommand.class);
 
     private static final String REPO_NAME = "default";
-
-    private static final long SLEEPING_DURATION = 10000;
 
     private void printHelp() {
         System.out.println("");
@@ -93,59 +85,6 @@ public class IndexCommand extends AbstractCommand {
 
     public void index(String repoName, String path, int batchSize,
             Boolean fullText) {
-        SimpleDateFormat timeFormater = new SimpleDateFormat("HH:mm:ss");
-        try {
-            SearchService searchService = SearchServiceDelegate.getRemoteSearchService();
-
-            if (searchService == null) {
-                throw new IndexingException("Cannot find search service");
-            }
-
-            long initialIndexingThreadNumber = searchService.getTotalCompletedIndexingTasks();
-
-            int orgBatchSize = searchService.getIndexingDocBatchSize();
-            searchService.setIndexingDocBatchSize(batchSize);
-            // Reindex from the root and do not compute fulltext
-            searchService.reindexAll(repoName, path, fullText);
-            log.info(timeFormater.format(new Date()) + " Indexing: " + path
-                    + " indexingDocBatchSize: " + orgBatchSize + " fullText: "
-                    + fullText);
-            double s = System.currentTimeMillis();
-            long lastNbIndexedDocs = 0;
-            long lastDiff = 0;
-            double lastTm = s / 1000;
-
-            while (true) {
-                Thread.sleep(SLEEPING_DURATION);
-                long nbIndexedDocs = searchService.getTotalCompletedIndexingTasks()
-                        - initialIndexingThreadNumber;
-                long diff = nbIndexedDocs - lastNbIndexedDocs;
-                lastNbIndexedDocs = nbIndexedDocs;
-                if ((diff == 0) && (lastDiff == 0)
-                        && (searchService.getActiveIndexingTasks() <= 0)) {
-                    break;
-                }
-                lastDiff = diff;
-                double tm = (System.currentTimeMillis() - s) / 1000;
-                double flow = nbIndexedDocs / tm;
-                double dflow = diff / (tm - lastTm);
-                lastTm = tm;
-                log.info(String.format(
-                        "%s indexed %5d docs at %6.2f docs/s (%7d docs at %6.2f docs/s) %d threads %d queued (batch %d). \n",
-                        timeFormater.format(new Date()), diff, dflow,
-                        nbIndexedDocs, flow,
-                        searchService.getActiveIndexingTasks(),
-                        searchService.getIndexingWaitingQueueSize(),
-                        searchService.getIndexingDocBatchSize()));
-            }
-            searchService.setIndexingDocBatchSize(orgBatchSize);
-            double tm = (System.currentTimeMillis() - s) / 1000;
-
-            log.info("Indexing " + lastNbIndexedDocs + " done in " + tm
-                    + " seconds");
-
-        } catch (Exception e) {
-            log.error(e);
-        }
+        log.info("No indexing available in this Nuxeo version");
     }
 }
