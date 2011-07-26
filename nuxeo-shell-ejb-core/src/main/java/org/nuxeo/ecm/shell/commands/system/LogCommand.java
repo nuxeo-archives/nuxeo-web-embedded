@@ -56,8 +56,8 @@ public class LogCommand extends AbstractCommand {
         System.out.println("        log off [package or class]");
         System.out.println("        log debug");
         System.out.println(" filename : logging file destination (writes in append mode)");
-        System.out.println(" log level : (optionnal, default=INFO): available values are TRACE, DEBUG, INFO, WARN, ERROR, FATAL");
-        System.out.println(" package or class (optionnal, default=\"org.nuxeo.ecm.shell\"): category logged (see Log4J doc. for more details)");
+        System.out.println(" log level : (optional, default=INFO): available values are TRACE, DEBUG, INFO, WARN, ERROR, FATAL");
+        System.out.println(" package or class (optional, default=\"org.nuxeo.ecm.shell\"): category logged (see Log4J doc. for more details)");
         System.out.println("");
         System.out.println("\"log off\" command stops given logger or all custom loggers if none is specified (resets configuration)");
         System.out.println("");
