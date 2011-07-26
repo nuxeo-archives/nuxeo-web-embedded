@@ -210,27 +210,6 @@
       </help>
     </command>
 
-    <command name="index" class="org.nuxeo.ecm.shell.commands.repository.IndexCommand">
-      <description>Re-index database</description>
-      <help>TODO</help>
-    </command>
-
-    <!--
-      <command name="indexOverload"
-      class="org.nuxeo.ecm.shell.commands.repository.IndexOverloadCommand">
-      <description> force multi-threaded indexing on the same doc </description>
-      <params> <param index="0" type="doc" /> <param index="1" type="int" />
-      </params> <help>TODO</help> </command>
-    -->
-
-    <!--
-      <command name="doubleIndex"
-      class="org.nuxeo.ecm.shell.commands.repository.DoubleIndex"> <description>
-      force multiple indexing of the same document inside the same transaction
-      </description> <params> <param index="0" type="doc" /> <param index="1"
-      type="int" /> </params> <help>TODO</help> </command>
-    -->
-
     <command name="view" class="org.nuxeo.ecm.shell.commands.repository.ViewCommand">
       <description>
         View the info about a document (on remote)

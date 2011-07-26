@@ -33,8 +33,6 @@ import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.impl.blob.StreamingBlob;
 import org.nuxeo.ecm.core.api.repository.RepositoryInstance;
 import org.nuxeo.ecm.core.client.NuxeoClient;
-import org.nuxeo.ecm.core.search.api.client.SearchService;
-import org.nuxeo.ecm.core.search.api.client.common.SearchServiceDelegate;
 import org.nuxeo.ecm.shell.CommandLine;
 import org.nuxeo.runtime.services.streaming.FileSource;
 import org.nuxeo.runtime.services.streaming.StreamSource;
@@ -44,8 +42,6 @@ import org.nuxeo.runtime.services.streaming.StreamSource;
  *
  */
 public class FSImportCommand extends AbstractCommand {
-
-    private static final int MAX_IDX_BATCH_SIZE = 50;
 
     protected static final Log log = LogFactory.getLog(FSImportCommand.class);
 
@@ -401,31 +397,6 @@ public class FSImportCommand extends AbstractCommand {
                 }
             }
             try {
-                SearchService searchService = SearchServiceDelegate.getRemoteSearchService();
-                Integer oldBatchSize = null;
-                long initialCompletedIndexingTasks = 0;
-                if (searchService != null) {
-                    oldBatchSize = searchService.getIndexingDocBatchSize();
-                    if (batchSize > MAX_IDX_BATCH_SIZE) {
-                        indexingBatchSize = MAX_IDX_BATCH_SIZE;
-                    } else {
-                        indexingBatchSize = batchSize;
-                    }
-                    searchService.setIndexingDocBatchSize(indexingBatchSize);
-                    log.info("Setting indexing batch size to "
-                            + searchService.getIndexingDocBatchSize());
-                    log.info("Indexing thread pool size = "
-                            + searchService.getNumberOfIndexingThreads());
-
-                    initialCompletedIndexingTasks = searchService.getTotalCompletedIndexingTasks();
-                    log.debug("Already completed indexing tasks= "
-                            + initialCompletedIndexingTasks);
-                    if (searchService.getActiveIndexingTasks() > 0) {
-                        log.warn("Indexing queue is not empty ");
-                    }
-
-                }
-
                 if (blockJMS) {
                     log.info("JMS event production is disabled ");
                 }
@@ -436,43 +407,13 @@ public class FSImportCommand extends AbstractCommand {
                 upload(rootDoc, rootFile);
                 session.save();
                 log.info("doc upload terminated");
-                if (searchService != null) {
-                    log.info("sync indexing terminated");
-                }
                 long t1 = System.currentTimeMillis();
                 // Thread.sleep(2000);
                 log.info(uploadedFiles + " doc created in " + (t1 - t0) + "ms");
                 log.info(uploadedFiles / ((t1 - t0) / 1000.0) + " doc/s");
                 log.info(uploadedKO / ((t1 - t0) / 1000.0) + " KB/s");
-                if (searchService != null) {
-                    log.info("waiting for asynchronous indexing to finish");
-                    while (searchService.getActiveIndexingTasks() > 0) {
-                        Thread.sleep(2500);
-                        long completedTasks = searchService.getTotalCompletedIndexingTasks();
-                        log.debug("completed indexing tasks= " + completedTasks);
 
-                        long nbIndexedDocs = searchService.getTotalCompletedIndexingTasks()
-                                - initialCompletedIndexingTasks;
-                        long indexToGo = uploadedFiles - nbIndexedDocs;
-                        if (indexToGo > 0) {
-                            log.info(nbIndexedDocs + " doc indexed ("
-                                    + indexToGo + " to go ... )");
-                        } else {
-                            log.info(nbIndexedDocs
-                                    + " doc indexed (processing additionnal reindex JMS events)");
-                        }
-                        // adaptBatchSize(indexToGo, searchService);
-                    }
-
-                    long t2 = System.currentTimeMillis();
-                    log.info("Async indexing completed");
-                    log.info(uploadedFiles + " doc indexed in " + (t2 - t0)
-                            + "ms");
-                    log.info(uploadedFiles / ((double) ((t2 - t0) / 1000))
-                            + " doc/s");
-                    searchService.setIndexingDocBatchSize(oldBatchSize);
-                }
-
+                // TODO check the event service for async task completion?
             } catch (Exception e) {
                 log.error("Error during import", e);
             } finally {

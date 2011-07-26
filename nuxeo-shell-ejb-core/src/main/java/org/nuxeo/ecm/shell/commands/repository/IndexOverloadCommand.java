@@ -21,11 +21,6 @@ package org.nuxeo.ecm.shell.commands.repository;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.nuxeo.ecm.core.api.DocumentModel;
-import org.nuxeo.ecm.core.api.PathRef;
-import org.nuxeo.ecm.core.search.api.client.IndexingException;
-import org.nuxeo.ecm.core.search.api.client.SearchService;
-import org.nuxeo.ecm.core.search.api.client.common.SearchServiceDelegate;
 import org.nuxeo.ecm.shell.CommandLine;
 
 public class IndexOverloadCommand extends AbstractCommand {
@@ -83,42 +78,7 @@ public class IndexOverloadCommand extends AbstractCommand {
     }
 
     public void index(String path, int nb, int batchSize) throws Exception {
-        SearchService searchService;
-        try {
-            searchService = SearchServiceDelegate.getRemoteSearchService();
-            if (searchService == null) {
-                throw new IndexingException("Cannot find search service");
-            }
-        } catch (Exception e) {
-            throw new IndexingException("Cannot find search service", e);
-        }
-
-        int oldBatchSize = searchService.getIndexingDocBatchSize();
-        DocumentModel dm = context.getRepositoryInstance().getDocument(
-                new PathRef(path));
-        if (batchSize != -1 && batchSize > 0) {
-            searchService.setIndexingDocBatchSize(batchSize);
-        }
-
-        if (nb > 100) {
-            nb = 100;
-            log.info("Nb of indexing tasks reduced to max queue size (100)");
-        }
-        log.info("Sending tasks to search service thread pool");
-        for (int i = 0; i < nb; i++) {
-            log.info("!!! explicit indexing is disabled !!!");
-        }
-
-        while (searchService.getActiveIndexingTasks() > 0) {
-            Thread.sleep(500);
-            long nbTasksToGo = searchService.getActiveIndexingTasks()
-                    + searchService.getIndexingWaitingQueueSize();
-            log.info("still " + nbTasksToGo + " tasks to run");
-        }
-
-        log.info("Terminated : doc indexed " + nb + " times");
-
-        searchService.setIndexingDocBatchSize(oldBatchSize);
+        log.info("No indexing available in this Nuxeo version");
     }
 
 }
