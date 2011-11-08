@@ -17,6 +17,7 @@
     <module>nuxeo-shell-ejb-servlet</module>
     <module>nuxeo-shell-ejb-servlet-handlers</module>
     <module>nuxeo-shell-ejb-distribution</module>
+    <module>nuxeo-shell-ejb-catalina</module>
   </modules>
   <dependencyManagement>
     <dependencies>
@@ -38,6 +39,11 @@
       <dependency>
         <groupId>org.nuxeo.shell</groupId>
         <artifactId>nuxeo-shell-ejb-distribution</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.shell</groupId>
+        <artifactId>nuxeo-shell-ejb-catalina</artifactId>
         <version>${project.version}</version>
       </dependency>
     </dependencies>

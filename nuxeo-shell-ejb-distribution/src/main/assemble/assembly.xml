@@ -20,7 +20,7 @@
 
   <target name="expand" unless="no.build">
     <artifact:nuxeo-expand />
-    <!-- <artifact:print output="${basedir}/dependency-tree.log" /> -->
+    <artifact:print output="${basedir}/target/dependency-tree.log" /> 
   </target>
 
   <target name="build"
@@ -123,6 +123,7 @@
           <artifact artifactId="qdox" />
           <artifact artifactId="quartz" />
           <artifact artifactId="servlet-api" />
+          <artifact artifactId="servlet-api-2.5" />
           <artifact artifactId="webdav" />
         </excludes>
       </artifact:set>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.nuxeo.shell</groupId>
+    <artifactId>nuxeo-shell-ejb-parent</artifactId>
+    <version>5.5-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>nuxeo-shell-ejb-catalina</artifactId>
+  <name>Nuxeo Shell EJB Catalina Hooker</name>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>catalina</artifactId>
+    </dependency>
+
+  </dependencies>
+
+
+</project>
