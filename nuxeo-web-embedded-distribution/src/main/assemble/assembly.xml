@@ -1,0 +1,87 @@
+<project name="nuxeo-shell-assembly"
+         default="build"
+         xmlns:nx="urn:nuxeo-build"
+         xmlns:artifact="urn:nuxeo-artifact">
+  <taskdef resource="org/nuxeo/build/antlib.xml" uri="urn:nuxeo-build" />
+  <taskdef resource="org/nuxeo/build/artifact/antlib.xml"
+           uri="urn:nuxeo-artifact" />
+
+  <target name="init" unless="init.done">
+    <property name="outdir" value="${maven.project.build.directory}" />
+    <property name="stagedir" value="${outdir}/stage" />
+    <property name="shelldir"
+              value="${stagedir}/nuxeo-web-embedded-${maven.project.version}" />
+    <property name="wardir"
+              value="${stagedir}/nuxeo-web-embedded-${maven.project.version}.war" />
+
+    <antcall target="expand" />
+    <property name="init.done" value="true" />
+  </target>
+
+  <target name="expand" unless="no.build">
+    <artifact:nuxeo-expand />
+    <artifact:print output="${basedir}/dependency-tree.log" /> 
+  </target>
+
+  <target name="build"
+          depends="init,clean,build-war"
+          unless="no.build" />
+
+  <target name="build-war">
+    <mkdir dir="${wardir}" />
+    <copy todir="${wardir}" overwrite="true">
+      <fileset dir="src/main/resources">
+        <include name="config/**" />
+        <include name="WEB-INF/**" />
+        <include name="META-INF/**" />
+      </fileset>
+    </copy>
+    <copy todir="${wardir}/WEB-INF/lib" overwrite="true">
+      <artifact:file artifactId="nuxeo-runtime-launcher" />
+      <artifact:file artifactId="nuxeo-web-embedded-servlet" />
+      <artifact:file artifactId="commons-logging" />
+    </copy>
+    <copy todir="${wardir}/bundles" overwrite="true">
+      <artifact:set>
+        <includes>
+          <artifact groupId="org.nuxeo*" />
+        </includes>
+        <excludes>
+          <artifact artifactId="nuxeo-web-embedded-servlet" />
+          <artifact artifactId="nuxeo-runtime-launcher" />
+        </excludes>
+      </artifact:set>
+    </copy>
+    <antcall target="lib-war" />
+    <zip destfile="${outdir}/${maven.project.artifactId}-${maven.project.version}.war"
+         basedir="${wardir}" />
+    <artifact:attach file="${outdir}/${maven.project.artifactId}-${maven.project.version}.war"
+                     target="${maven.project.groupId}:${maven.project.artifactId}"
+                     classifier="war"
+                     type="zip" />
+  </target>
+
+  <target name="lib-war">
+    <copy todir="${wardir}/lib" overwrite="true">
+      <artifact:set>
+        <excludes>
+          <artifact groupId="org.nuxeo*" />
+          <artifact artifactId="jsr173*" />
+          <artifact artifactId="jsr181*" />
+          <artifact artifactId="pluggable-instrumentor" />
+          <artifact artifactId="qdox" />
+          <artifact artifactId="quartz" />
+          <artifact artifactId="servlet-api" />
+          <artifact artifactId="webdav" />
+        </excludes>
+      </artifact:set>
+    </copy>
+    <!-- Remove duplicates -->
+    <nx:rmdups dir="${wardir}/lib" />
+  </target>
+
+  <target name="clean">
+    <delete dir="${stagedir}" />
+  </target>
+
+</project>

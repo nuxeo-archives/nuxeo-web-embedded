@@ -8,16 +8,14 @@
     <version>5.5-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.nuxeo.shell</groupId>
-  <artifactId>nuxeo-shell-ejb-parent</artifactId>
-  <name>Nuxeo Shell EJB</name>
+  <groupId>org.nuxeo.ecm.web</groupId>
+  <artifactId>nuxeo-web-embedded-parent</artifactId>
+  <name>Nuxeo Web Embedded Parent</name>
   <packaging>pom</packaging>
 
   <modules>
-    <module>nuxeo-shell-ejb-core</module>
-    <module>nuxeo-shell-ejb-servlet</module>
-    <module>nuxeo-shell-ejb-servlet-handlers</module>
-    <module>nuxeo-shell-ejb-distribution</module>
+    <module>nuxeo-web-embedded-servlet</module>
+    <module>nuxeo-web-embedded-distribution</module>
   </modules>
 
   <repositories>
@@ -44,8 +42,8 @@
   </repositories>
 
   <scm>
-    <connection>scm:hg:http://hg.nuxeo.org/addons/nuxeo-shell-ejb</connection>
-    <developerConnection>scm:hg:https://hg.nuxeo.org/addons/nuxeo-shell-ejb</developerConnection>
-    <url>http://hg.nuxeo.org/addons/nuxeo-shell-ejb</url>
+    <connection>scm:hg:http://hg.nuxeo.org/addons/nuxeo.web.embedded</connection>
+    <developerConnection>scm:hg:https://hg.nuxeo.org/addons/nuxeo.web.embedded</developerConnection>
+    <url>http://hg.nuxeo.org/addons/nuxeo.web.embedded</url>
   </scm>
 </project>
