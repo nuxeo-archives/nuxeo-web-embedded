@@ -25,23 +25,24 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.servlet.ServletHandler;
+import org.nuxeo.runtime.transaction.TransactionHelper;
 
 /**
  * @author matic
- *
+ * 
  */
 public class EmbeddedServletHandler extends ServletHandler {
 
-        @Override
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-         RootDocumentFetcher rdf = new RootDocumentFetcher();
-         try {
-            rdf.runUnrestricted();
-        } catch (ClientException e) {
-            throw new ServletException("Cannot fetch root doc", e);
-        }
-        OutputStream out = resp.getOutputStream();
-        out.write(("Root: "+rdf.rootDoc.getPathAsString()).getBytes());
+            RootDocumentFetcher rdf = new RootDocumentFetcher();
+            try {
+                rdf.runUnrestricted();
+            } catch (ClientException e) {
+                throw new ServletException("Cannot fetch root doc", e);
+            }
+            OutputStream out = resp.getOutputStream();
+            out.write(("Root: " + rdf.rootDoc.getPathAsString()).getBytes());
     }
 }

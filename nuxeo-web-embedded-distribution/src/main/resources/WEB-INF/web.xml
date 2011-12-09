@@ -5,6 +5,12 @@
 <web-app>
 	<description>Nuxeo Client demo servlet</description>
 
+	<filter>
+		<filter-name>tx-injector</filter-name>
+		<filter-class>org.nuxeo.ecm.servlet.TxInjectorFilter</filter-class>
+	</filter>
+
+
 	<servlet>
 		<servlet-name>demo</servlet-name>
 		<servlet-class>org.nuxeo.ecm.servlet.NuxeoServlet</servlet-class>
@@ -36,4 +42,9 @@
 		<url-pattern>/demo</url-pattern>
 	</servlet-mapping>
 
+	<filter-mapping>
+		<filter-name>tx-injector</filter-name>
+		<url-pattern>/demo</url-pattern>
+	</filter-mapping>
+	
 </web-app>
