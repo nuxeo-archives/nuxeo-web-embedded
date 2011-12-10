@@ -47,11 +47,14 @@ public class TxInjectorFilter implements Filter {
         }
 
         boolean started = TransactionHelper.startTransaction();
+        boolean done = false;
         try {
             chain.doFilter(request, response);
-        } catch (Throwable e) {
-            TransactionHelper.setTransactionRollbackOnly();
+            done = true;
         } finally {
+            if (done == false) {
+                TransactionHelper.setTransactionRollbackOnly();
+            }
             if (started) {
                 TransactionHelper.commitOrRollbackTransaction();
             }
