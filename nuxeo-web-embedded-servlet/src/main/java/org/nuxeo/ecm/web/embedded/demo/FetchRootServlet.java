@@ -14,25 +14,26 @@
  * Contributors:
  *     matic
  */
-package org.nuxeo.ecm.servlet.handlers;
+package org.nuxeo.ecm.web.embedded.demo;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.nuxeo.ecm.core.api.ClientException;
-import org.nuxeo.ecm.servlet.ServletHandler;
-import org.nuxeo.runtime.transaction.TransactionHelper;
 
 /**
  * @author matic
- * 
+ *
  */
-public class EmbeddedServletHandler extends ServletHandler {
+public class FetchRootServlet extends HttpServlet{
 
+    private static final long serialVersionUID = 1L;
+    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -45,4 +46,5 @@ public class EmbeddedServletHandler extends ServletHandler {
             OutputStream out = resp.getOutputStream();
             out.write(("Root: " + rdf.rootDoc.getPathAsString()).getBytes());
     }
+
 }

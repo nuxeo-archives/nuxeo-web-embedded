@@ -17,9 +17,8 @@
  * $Id$
  */
 
-package org.nuxeo.ecm.servlet;
+package org.nuxeo.ecm.web.embedded;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletConfig;
@@ -38,22 +37,17 @@ public class NuxeoServlet extends HttpServlet {
 
     private static final long serialVersionUID = 7547124250731789991L;
 
-    protected ServletHandler handler;
-
     protected FrameworkBootstrap fb;
+    
+    protected NuxeoServletHandler handler;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-
-        if (fb == null) {
-            try {
-                fb = loadRuntime(config);
-            } catch (Exception e) {
-                throw new ServletException("Cannot load nuxeo", e);
-            }
+        if (NuxeoEmbeddedLoader.instance == null) {
+            throw new ServletException("Nuxeo embedded not configured in web context");
         }
-
+        this.fb = NuxeoEmbeddedLoader.instance.fb;
         String handlerClass = getInitParameter("handler");
         if (handlerClass == null) {
             throw new ServletException(
@@ -63,9 +57,9 @@ public class NuxeoServlet extends HttpServlet {
         }
 
         try {
-            final Object newInstance = fb.getClassLoader().loadClass(
+            final Object newInstance = NuxeoEmbeddedLoader.instance. fb.getClassLoader().loadClass(
                     handlerClass).newInstance();
-            handler = (ServletHandler) newInstance;
+            handler = (NuxeoServletHandler) newInstance;
             initHandler();
         } catch (Exception e) {
             throw new ServletException("Failed to instantiate handler", e);
@@ -76,6 +70,7 @@ public class NuxeoServlet extends HttpServlet {
     public void destroy() {
         destroyHandler();
         handler = null;
+        fb = null;
         super.destroy();
     }
 
@@ -159,29 +154,6 @@ public class NuxeoServlet extends HttpServlet {
     protected void doTrace(HttpServletRequest arg0, HttpServletResponse arg1)
             throws ServletException, IOException {
         handler.doTrace(arg0, arg1);
-    }
-
-    protected static FrameworkBootstrap loadRuntime(ServletConfig config)
-            throws Exception {
-        String warFile = config.getServletContext().getRealPath("");
-        String root = config.getInitParameter("nxhome");
-        if (root == null) {
-            root = "";
-        }
-        File appRoot = null;
-        if (root.startsWith("/")) {
-            appRoot = new File(root);
-        } else {
-            appRoot = new File(warFile + "/" + root);
-        }
-        root = appRoot.getAbsolutePath();
-
-        FrameworkBootstrap fb;
-        fb = new FrameworkBootstrap(NuxeoServlet.class.getClassLoader(),
-                appRoot);
-        fb.initialize();
-        fb.start();
-        return fb;
     }
 
 }

@@ -17,7 +17,7 @@
  * $Id$
  */
 
-package org.nuxeo.ecm.servlet;
+package org.nuxeo.ecm.web.embedded;
 
 import java.io.IOException;
 
@@ -29,12 +29,12 @@ import javax.servlet.http.HttpServletResponse;
  * @author <a href="mailto:bs@nuxeo.com">Bogdan Stefanescu</a>
  *
  */
-public class ServletHandler {
+public class NuxeoServletHandler {
 
     protected NuxeoServlet servlet;
 
-    protected void init(NuxeoServlet servlet) throws ServletException {
-        this.servlet = servlet;
+    protected void init(NuxeoServlet caller) throws ServletException {
+        this.servlet = caller;
     }
 
     protected void destroy() {

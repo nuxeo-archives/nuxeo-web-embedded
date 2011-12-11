@@ -14,7 +14,7 @@
  * Contributors:
  *     matic
  */
-package org.nuxeo.ecm.servlet;
+package org.nuxeo.ecm.web.embedded;
 
 import java.io.IOException;
 

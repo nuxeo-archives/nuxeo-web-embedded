@@ -14,7 +14,7 @@
  * Contributors:
  *     matic
  */
-package org.nuxeo.ecm.servlet.handlers;
+package org.nuxeo.ecm.web.embedded.demo;
 
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
@@ -27,7 +27,7 @@ public class RootDocumentFetcher extends UnrestrictedSessionRunner {
     /**
      * @param repositoryName
      */
-    protected RootDocumentFetcher() {
+    public RootDocumentFetcher() {
         super("default");
     }
 
