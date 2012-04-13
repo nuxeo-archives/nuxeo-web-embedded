@@ -42,8 +42,8 @@
   </repositories>
 
   <scm>
-    <connection>scm:hg:http://hg.nuxeo.org/addons/nuxeo.web.embedded</connection>
-    <developerConnection>scm:hg:https://hg.nuxeo.org/addons/nuxeo.web.embedded</developerConnection>
-    <url>http://hg.nuxeo.org/addons/nuxeo.web.embedded</url>
+    <connection>scm:git:git://github.com/nuxeo/nuxeo-web-embedded.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com:nuxeo/nuxeo-web-embedded.git</developerConnection>
+    <url>https://github.com/nuxeo/nuxeo-web-embedded</url>
   </scm>
 </project>
