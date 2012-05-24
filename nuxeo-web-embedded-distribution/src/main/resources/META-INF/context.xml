@@ -31,10 +31,10 @@
 	mail.pop3.host="pop3.nosuchhost.nosuchdomain.com"
 	mail.pop3.user="nobody"
 	mail.transport.protocol="smtp"
-	mail.smtp.host="localhost" mail.smtp.port="25"
-	mail.smtp.starttls.enable="false"
-	mail.smtp.auth="false"
-	mail.smtp.user="anonymous"
+	mail.transport.host="localhost" mail.transport.port="25"
+	mail.transport.starttls.enable="false"
+	mail.transport.auth="false"
+	mail.transport.user="anonymous"
 	password="password" mail.from="noreply@nuxeo.com"
 	mail.debug="false" />
 
