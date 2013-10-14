@@ -40,7 +40,6 @@
       <artifact name="nuxeo-runtime-scripting" />
       <artifact name="nuxeo-core-api" />
       <artifact name="nuxeo-core-schema" />
-      <artifact name="nuxeo-core-client" />
     </includes>
   </artifactSet>
 
