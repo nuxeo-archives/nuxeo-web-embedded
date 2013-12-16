@@ -23,7 +23,7 @@
       <artifactId>nuxeo-runtime</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.nuxeo.runtime</groupId>
+      <groupId>org.nuxeo.lib.runtime</groupId>
       <artifactId>nuxeo-runtime-launcher</artifactId>
     </dependency>
     <dependency>
