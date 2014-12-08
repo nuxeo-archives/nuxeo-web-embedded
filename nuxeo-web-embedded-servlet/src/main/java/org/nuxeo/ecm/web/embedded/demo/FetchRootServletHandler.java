@@ -28,20 +28,18 @@ import org.nuxeo.ecm.web.embedded.NuxeoServletHandler;
 
 /**
  * @author matic
- * 
  */
 public class FetchRootServletHandler extends NuxeoServletHandler {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-            RootDocumentFetcher rdf = new RootDocumentFetcher();
-            try {
-                rdf.runUnrestricted();
-            } catch (ClientException e) {
-                throw new ServletException("Cannot fetch root doc", e);
-            }
-            OutputStream out = resp.getOutputStream();
-            out.write(("Root: " + rdf.rootDoc.getPathAsString()).getBytes());
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        RootDocumentFetcher rdf = new RootDocumentFetcher();
+        try {
+            rdf.runUnrestricted();
+        } catch (ClientException e) {
+            throw new ServletException("Cannot fetch root doc", e);
+        }
+        OutputStream out = resp.getOutputStream();
+        out.write(("Root: " + rdf.rootDoc.getPathAsString()).getBytes());
     }
 }

@@ -33,27 +33,25 @@ import org.nuxeo.osgi.application.FrameworkBootstrap;
 
 /**
  * @author <a href="mailto:bs@nuxeo.com">Bogdan Stefanescu</a>
- * 
  */
 public class NuxeoFilter implements Filter {
-    
+
     protected FrameworkBootstrap fb;
-    
+
     @Override
     public void init(FilterConfig config) throws ServletException {
-       if (NuxeoEmbeddedLoader.instance == null) {
-           throw new ServletException("nuxeo embedded not configured in web context");
-       }
-       this.fb = NuxeoEmbeddedLoader.instance.fb;
+        if (NuxeoEmbeddedLoader.instance == null) {
+            throw new ServletException("nuxeo embedded not configured in web context");
+        }
+        this.fb = NuxeoEmbeddedLoader.instance.fb;
     }
 
     @Override
     public void destroy() {
-        
+
     }
-    
-     protected void checkIsAuthenticated(HttpServletRequest request)
-            throws ServletException {
+
+    protected void checkIsAuthenticated(HttpServletRequest request) throws ServletException {
         if (request.getAuthType() != null) {
             if (request.getUserPrincipal() == null) {
                 throw new ServletException("Not authenticated");
@@ -62,8 +60,8 @@ public class NuxeoFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
+            ServletException {
         checkIsAuthenticated((HttpServletRequest) request);
         Thread cthread = Thread.currentThread();
         ClassLoader cl = cthread.getContextClassLoader();
@@ -74,6 +72,5 @@ public class NuxeoFilter implements Filter {
             cthread.setContextClassLoader(cl);
         }
     }
-
 
 }

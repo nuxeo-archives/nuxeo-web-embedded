@@ -27,7 +27,6 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author <a href="mailto:bs@nuxeo.com">Bogdan Stefanescu</a>
- *
  */
 public class NuxeoServletHandler {
 
@@ -40,12 +39,12 @@ public class NuxeoServletHandler {
     protected void destroy() {
         this.servlet = null;
     }
-    
+
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     }
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException  {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     }
 
@@ -68,6 +67,5 @@ public class NuxeoServletHandler {
     protected void doTrace(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     }
-
 
 }

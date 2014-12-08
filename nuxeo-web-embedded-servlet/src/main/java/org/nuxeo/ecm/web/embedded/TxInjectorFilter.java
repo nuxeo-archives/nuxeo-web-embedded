@@ -29,7 +29,6 @@ import org.nuxeo.runtime.transaction.TransactionHelper;
 
 /**
  * @author matic
- * 
  */
 public class TxInjectorFilter implements Filter {
 
@@ -39,8 +38,8 @@ public class TxInjectorFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
+            ServletException {
         if (TransactionHelper.isTransactionActive()) {
             chain.doFilter(request, response);
             return;

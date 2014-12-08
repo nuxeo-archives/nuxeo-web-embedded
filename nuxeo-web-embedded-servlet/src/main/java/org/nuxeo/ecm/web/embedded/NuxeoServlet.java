@@ -31,14 +31,13 @@ import org.nuxeo.osgi.application.FrameworkBootstrap;
 
 /**
  * @author <a href="mailto:bs@nuxeo.com">Bogdan Stefanescu</a>
- * 
  */
 public class NuxeoServlet extends HttpServlet {
 
     private static final long serialVersionUID = 7547124250731789991L;
 
     protected FrameworkBootstrap fb;
-    
+
     protected NuxeoServletHandler handler;
 
     @Override
@@ -50,15 +49,13 @@ public class NuxeoServlet extends HttpServlet {
         this.fb = NuxeoEmbeddedLoader.instance.fb;
         String handlerClass = getInitParameter("handler");
         if (handlerClass == null) {
-            throw new ServletException(
-                    "No servlet handler class specified. "
-                            + "In web.xml you need to add an init parameter to that server "
-                            + "named 'handler' that points to a servlet handler");
+            throw new ServletException("No servlet handler class specified. "
+                    + "In web.xml you need to add an init parameter to that server "
+                    + "named 'handler' that points to a servlet handler");
         }
 
         try {
-            final Object newInstance = NuxeoEmbeddedLoader.instance. fb.getClassLoader().loadClass(
-                    handlerClass).newInstance();
+            final Object newInstance = NuxeoEmbeddedLoader.instance.fb.getClassLoader().loadClass(handlerClass).newInstance();
             handler = (NuxeoServletHandler) newInstance;
             initHandler();
         } catch (Exception e) {
@@ -97,8 +94,7 @@ public class NuxeoServlet extends HttpServlet {
     }
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Thread cthread = Thread.currentThread();
         ClassLoader cl = cthread.getContextClassLoader();
         cthread.setContextClassLoader(fb.getClassLoader());
@@ -108,51 +104,44 @@ public class NuxeoServlet extends HttpServlet {
                     throw new ServletException("Not authenticated");
                 }
             }
-            super.service(req,resp);
+            super.service(req, resp);
         } finally {
             cthread.setContextClassLoader(cl);
         }
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         handler.doDelete(req, resp);
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         handler.doGet(req, resp);
     }
 
     @Override
-    protected void doHead(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    protected void doHead(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         handler.doHead(req, resp);
     }
 
     @Override
-    protected void doOptions(HttpServletRequest arg0, HttpServletResponse arg1)
-            throws ServletException, IOException {
+    protected void doOptions(HttpServletRequest arg0, HttpServletResponse arg1) throws ServletException, IOException {
         handler.doOptions(arg0, arg1);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         handler.doPost(req, resp);
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         handler.doPut(req, resp);
     }
 
     @Override
-    protected void doTrace(HttpServletRequest arg0, HttpServletResponse arg1)
-            throws ServletException, IOException {
+    protected void doTrace(HttpServletRequest arg0, HttpServletResponse arg1) throws ServletException, IOException {
         handler.doTrace(arg0, arg1);
     }
 

@@ -28,14 +28,13 @@ import org.nuxeo.osgi.application.FrameworkBootstrap;
 
 /**
  * @author matic
- * 
  */
 public class NuxeoEmbeddedLoader implements ServletContextListener {
 
     protected static NuxeoEmbeddedLoader instance;
-    
+
     protected final Log log = LogFactory.getLog(NuxeoEmbeddedLoader.class);
-    
+
     protected FrameworkBootstrap fb;
 
     @Override
