@@ -32,7 +32,7 @@ public class RootDocumentFetcher extends UnrestrictedSessionRunner {
     }
 
     @Override
-    public void run() throws ClientException {
+    public void run() {
         rootDoc = session.getRootDocument();
     }
 
