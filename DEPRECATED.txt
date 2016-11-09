@@ -1,0 +1,1 @@
+The Nuxeo Platform web-embedded addon has been deprecated since 8.4 and removed from 8.10.
